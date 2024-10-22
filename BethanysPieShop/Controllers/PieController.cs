@@ -32,7 +32,7 @@ namespace BethanysPieShop.Controllers
             // ViewBag.CurrentCategory = "Cheese cakes";
             // return View(_pieRepository.AllPies);
 
-            PieListViewModel pieListViewModel = new PieListViewModel(_pieRepository.AllPies, "Cheese cakes", _pieListLogger);
+            PieListViewModel pieListViewModel = new PieListViewModel(_pieRepository.AllPies, "All pies", _pieListLogger);
             return View(pieListViewModel);
         }
 
