@@ -15,6 +15,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        ViewBag.Message = "Welcome to Bethanys Pie Shop";
         return View();
     }
 
