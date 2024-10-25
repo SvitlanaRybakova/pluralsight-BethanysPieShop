@@ -1,13 +1,24 @@
 using BethanysPieShop.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContext<BethanysPieShopDbContext>(options =>
+{
+    options.UseSqlServer(
+        builder.Configuration["ConnectionStrings:BethanysPieShopDbContextConnection"]);
+});
+
+
 // One instance per HTTP request, for example shopping cart service that needs to store items only for the duration of one request.
-builder.Services.AddScoped<ICategoryRepository, MockCategoryRepository>();
-builder.Services.AddScoped<IPieRepository, MockPieRepository>();
+// builder.Services.AddScoped<ICategoryRepository, MockCategoryRepository>();
+// builder.Services.AddScoped<IPieRepository, MockPieRepository>();
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IPieRepository, PieRepository>();
 
 // A new instance every time the service is used, for example logging service that logs messages and doesn’t need to keep track of past logs.
 // builder.Services.AddTransient
@@ -35,4 +46,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+DbInitializer.Seed(app);
 app.Run();
